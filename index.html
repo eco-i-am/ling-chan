@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ling Chan — Chinese Restaurant, Marikina</title>
+<meta name="description" content="Ling Chan Chinese Restaurant in Marikina City. Serving Authentic Happiness. Dine-in, takeout, party trays and online reservations.">
+<link rel="icon" href="assets/logo.png">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="nav">
+  <a class="brand" href="#top"><img src="assets/logo.png" alt="Ling Chan logo"><span>Ling Chan</span></a>
+  <nav>
+    <a href="#events">Events</a>
+    <a href="#menu">Party Trays</a>
+    <a href="#about">About</a>
+    <a href="#visit">Visit</a>
+    <a class="btn small" href="#reserve">Reserve a Table</a>
+  </nav>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="hero-in">
+      <p class="eyebrow">中國菜 · Chinese Restaurant · Marikina City</p>
+      <h1>Serving Authentic Happiness</h1>
+      <p class="lead">Family feasts, holiday gatherings and everyday favourites — dine in, take out, or book a table in under a minute.</p>
+      <div class="cta">
+        <a class="btn" href="#reserve">Reserve a Table</a>
+        <a class="btn ghost" href="#events">Book an Event</a>
+        <a class="btn ghost" href="#menu">Party Trays</a>
+      </div>
+      <ul class="chips"><li>Dine-in</li><li>Takeout</li><li>In-store pickup</li><li>Reservations</li></ul>
+    </div>
+  </section>
+
+  <section id="reserve" class="reserve">
+    <div class="wrap">
+      <h2>Reserve a table</h2>
+      <p class="sub">Pick a branch, date, party size and time. You'll get a confirmation code instantly.</p>
+      <div class="res-grid">
+        <form id="resForm" class="card" novalidate>
+          <div class="row">
+            <label>Branch
+              <select id="branch" required>
+                <option value="Guerilla">Guerilla St., Sto. Niño, Marikina</option>
+                <option value="Panorama">Panorama</option>
+              </select>
+            </label>
+            <label>Party size
+              <select id="size" required></select>
+            </label>
+          </div>
+          <div class="row">
+            <label>Date
+              <input type="date" id="date" required>
+            </label>
+            <label>Occasion <span class="opt">(optional)</span>
+              <select id="occasion">
+                <option value="">—</option><option>Birthday</option><option>Anniversary</option>
+                <option>Family gathering</option><option>Business</option><option>Holiday party</option>
+              </select>
+            </label>
+          </div>
+          <fieldset>
+            <legend>Available times</legend>
+            <div id="slots" class="slots" role="radiogroup" aria-label="Available times"></div>
+            <p id="slotMsg" class="hint"></p>
+          </fieldset>
+          <div class="row">
+            <label>Full name<input id="name" required autocomplete="name"></label>
+            <label>Mobile number<input id="phone" type="tel" required placeholder="09XX XXX XXXX" autocomplete="tel"></label>
+          </div>
+          <label>Email <span class="opt">(optional)</span><input id="email" type="email" autocomplete="email"></label>
+          <label>Special requests <span class="opt">(optional)</span><textarea id="notes" rows="2" placeholder="High chair, allergies, birthday noodles…"></textarea></label>
+          <p id="err" class="err" role="alert"></p>
+          <button class="btn full" type="submit">Confirm reservation</button>
+        </form>
+
+        <aside class="card side">
+          <div id="summary">
+            <h3>Your reservation</h3>
+            <p class="hint">Fill in the form to see your summary.</p>
+          </div>
+          <hr>
+          <h3>Manage a booking</h3>
+          <form id="lookup" class="lookup">
+            <input id="code" placeholder="Confirmation code" aria-label="Confirmation code">
+            <button class="btn small" type="submit">Find</button>
+          </form>
+          <div id="found"></div>
+          <hr>
+          <p class="hint">Groups of 13+? Call <a href="tel:+639270124004">0927 012 4004</a>.</p>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section id="events" class="events">
+    <div class="wrap">
+      <h2>Host your event with us</h2>
+      <p class="sub">Birthdays, weddings, reunions, christenings and company parties. Tell us the date and we'll hold it while our events team confirms the details.</p>
+      <div class="res-grid">
+        <form id="evForm" class="card" novalidate>
+          <div class="row">
+            <label>Venue
+              <select id="evBranch"><option value="Guerilla">Guerilla St., Sto. Niño, Marikina</option><option value="Panorama">Panorama</option></select>
+            </label>
+            <label>Event type
+              <select id="evType"><option>Birthday</option><option>Wedding / Reception</option><option>Christening</option><option>Family reunion</option><option>Company event</option><option>Graduation</option><option>Other</option></select>
+            </label>
+          </div>
+          <div class="row">
+            <label>Event date<input type="date" id="evDate" required></label>
+            <label>Expected guests<input type="number" id="evGuests" min="10" max="150" value="30" required></label>
+          </div>
+          <fieldset>
+            <legend>Session</legend>
+            <div id="evSessions" class="slots" role="radiogroup" aria-label="Event session"></div>
+            <p id="evSlotMsg" class="hint"></p>
+          </fieldset>
+          <div class="row">
+            <label>Set-up
+              <select id="evSetup"><option>Function area (private)</option><option>Whole restaurant buy-out</option><option>Not sure yet</option></select>
+            </label>
+            <label>Food
+              <select id="evFood"><option>Set menu per head</option><option>Party trays</option><option>À la carte</option><option>Not sure yet</option></select>
+            </label>
+          </div>
+          <div class="row">
+            <label>Contact name<input id="evName" required autocomplete="name"></label>
+            <label>Mobile number<input id="evPhone" type="tel" required placeholder="09XX XXX XXXX" autocomplete="tel"></label>
+          </div>
+          <label>Email <span class="opt">(optional)</span><input id="evEmail" type="email" autocomplete="email"></label>
+          <label>Details <span class="opt">(optional)</span><textarea id="evNotes" rows="3" placeholder="Program, sound system, cake, decorations, budget…"></textarea></label>
+          <p id="evErr" class="err" role="alert"></p>
+          <button class="btn full" type="submit">Request event booking</button>
+        </form>
+        <aside class="card side">
+          <h3>How it works</h3>
+          <ol class="steps">
+            <li>Send your request. We hold the date right away.</li>
+            <li>Our events team contacts you to confirm menu and set-up.</li>
+            <li>A deposit may be required to lock in the date.</li>
+          </ol>
+          <hr>
+          <p class="hint">Events of 10 to 150 guests. Need something bigger or sooner than 3 days out? Call <a href="tel:+639270124004">0927 012 4004</a>.</p>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section id="menu" class="menu">
+    <div class="wrap">
+      <h2>Holiday Party Trays</h2>
+      <p class="sub">Each tray serves approximately 10–12 pax. Order any 2 and get a free Ling Chan umbrella.</p>
+      <div id="menuGrid" class="menu-grid"></div>
+      <p class="hint center">Orders: Guerilla <a href="tel:+639270124004">0927 012 4004</a> · Panorama <a href="tel:+639285245346">0928 524 5346</a></p>
+    </div>
+  </section>
+
+  <section id="about" class="about">
+    <div class="wrap two">
+      <img src="assets/logo.png" alt="Ling Chan" class="about-logo">
+      <div>
+        <h2>Authentic Chinese, made for sharing</h2>
+        <p>Ling Chan is a Chinese restaurant in Marikina City, loved by more than 40,000 followers. From crispy lumpiang Shanghai and salted egg shrimp to Yang Chow fried rice and birthday noodles, every dish is made to be passed around the table.</p>
+        <p>Celebrating? Reserve a table, or take a party tray home for the whole family.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="visit" class="visit">
+    <div class="wrap two">
+      <div>
+        <h2>Visit us</h2>
+        <p><strong>Guerilla branch</strong><br>2 Guerilla Street, Barangay Sto. Niño,<br>Marikina City, Philippines 1800</p>
+        <p><strong>Phone</strong><br><a href="tel:+639270124004">0927 012 4004</a> (Guerilla)<br><a href="tel:+639285245346">0928 524 5346</a> (Panorama)</p>
+        <p><strong>Email</strong><br><a href="mailto:lingchanguerilla@gmail.com">lingchanguerilla@gmail.com</a></p>
+        <p><strong>Hours</strong><br>Daily <span id="hoursText"></span></p>
+        <p><a class="btn ghost dark" href="https://www.facebook.com/p/Ling-Chan-61566582730433/" target="_blank" rel="noopener">Follow on Facebook</a></p>
+      </div>
+      <iframe title="Map" loading="lazy" src="https://www.google.com/maps?q=2+Guerilla+Street+Sto.+Nino+Marikina+City&output=embed"></iframe>
+    </div>
+  </section>
+</main>
+
+<footer><img src="assets/logo.png" alt=""><span>© <span id="yr"></span> Ling Chan Chinese Restaurant · <a href="admin.html">Staff</a></span></footer>
+
+<div id="modal" class="modal" hidden>
+  <div class="card modal-in" role="dialog" aria-modal="true" aria-labelledby="mTitle">
+    <h3 id="mTitle">Reservation confirmed 🎉</h3>
+    <div id="mBody"></div>
+    <button class="btn full" id="mClose">Done</button>
+  </div>
+</div>
+<script src="store.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
