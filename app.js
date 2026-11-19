@@ -30,6 +30,7 @@ function renderSlots() {
   });
   if (!Store.isOpen(b, d, chosen || '00:00', s) && chosen) chosen = '';
   $('slotMsg').textContent = any ? '' : 'No tables available for this date and party size. Try another date or call us.';
+  return any;
 }
 function summary() {
   const t = chosen ? Store.label(chosen) : '—';
@@ -134,4 +135,9 @@ $('quick').addEventListener('submit', e => {
   showTab('table'); renderSlots(); summary();
   $('book').scrollIntoView({ behavior: 'smooth', block: 'start' });
 });
-renderSlots(); summary(); renderEvSessions();
+// Late in the day, today has no times left: start on tomorrow instead.
+if (!renderSlots()) {
+  const t = iso(new Date(today.getTime() + 864e5));
+  $('date').value = t; $('qDate').value = t; renderSlots();
+}
+summary(); renderEvSessions();

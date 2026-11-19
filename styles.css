@@ -140,9 +140,12 @@ td .btn.ghost{background:transparent;border:1px solid var(--ink);color:var(--ink
 .tablewrap{overflow-x:auto}
 
 @media(max-width:860px){
-  .hero{min-height:0;background:linear-gradient(0deg,rgba(18,12,10,.94) 0%,rgba(18,12,10,.78) 55%,rgba(18,12,10,.2) 100%),url(assets/front.jpg) 62% 12%/cover no-repeat,var(--ink)}
-  .hero-copy{padding:210px 20px 40px}.seal{display:none}
-  .top{background:rgba(18,12,10,.78)}.top nav{gap:16px}.top nav a:nth-child(2),.top nav a:nth-child(3){display:none}
+  .hero{display:block;min-height:0;background:var(--ink)}
+  .hero::before{content:"";display:block;height:62vw;min-height:230px;max-height:420px;background:url(assets/front.jpg) center 30%/cover no-repeat}
+  .hero-copy{max-width:none;padding:32px max(20px,env(safe-area-inset-left,0px)) 40px}.seal{display:none}
+  .quick{max-width:none}.quick label:nth-child(3){grid-column:1/-1;border-right:0}
+  .top{position:sticky;top:env(safe-area-inset-top,0px);background:var(--ink);padding:10px max(16px,env(safe-area-inset-left,0px))}.top nav{gap:16px}.top nav a:nth-child(2),.top nav a:nth-child(3){display:none}
+  .brand img{width:48px;height:48px}
   .menu-photos{grid-auto-flow:row}
   .quick{grid-template-columns:1fr 1fr}.quick label{border-bottom:1px solid var(--line)}.quick .btn{grid-column:1/-1;padding:16px}
   .book-grid{grid-template-columns:1fr;gap:40px}.side{border-left:0;border-top:1px solid var(--line);padding:32px 0 0}
