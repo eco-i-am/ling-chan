@@ -73,26 +73,15 @@ const GROUPS = [
     `<li><span>${e(n)} <em lang="zh-Hans">${e(zh)}</em>${note ? `<small>${e(note)}</small>` : ''}</span><i class="dots"></i><span class="price">${e(price(v))}</span></li>`;
   const cat = ([title, zh, items]) =>
     `<section class="cat"><h3>${e(title)} <span lang="zh-Hans">${e(zh)}</span></h3><ul>${items.map(item).join('')}</ul></section>`;
-  // Photos of the restaurant's own dishes, cropped from its menu and listing. [file, alt text]
-  const PHOTOS = {
-    starters: [['starters.jpg', 'Hot and sour potato salad']],
-    dimsum: [['dimsum.jpg', 'Xiao long bao in a bamboo steamer']],
-    pork: [['pork.jpg', 'Eggplant minced pork with salted fish in a claypot']],
-    chicken: [['chicken.jpg', 'Soy chicken']],
-    beef: [['beef.jpg', 'Sizzling beef tenderloin on a hot plate']],
-    seafood: [['seafood.jpg', 'Steamed pompano with ginger and scallion'], ['crab.jpg', 'Crab creations: salt and pepper, sate, salted egg and steamed garlic']],
-    szechuan: [['szechuan.jpg', 'Mapo tofu in a claypot']],
-    tofu: [['tofu.jpg', 'Pan fried tofu with dried scallops']],
-    rice: [['rice.jpg', 'Ling Chan fried rice']],
-    noodles: [['noodles.jpg', 'Crispy birthday noodles and hofan']],
-    dessert: [['dessert.jpg', 'Hot taro dessert']]
-  };
-  const tabs = document.getElementById('menuTabs'), grid = document.getElementById('menuGrid'), note = document.getElementById('menuNote'), pics = document.getElementById('menuPhotos');
+  // Food photo shown faintly behind each menu category. Categories without their own photo borrow a similar one.
+  const BG = { trays: 'rice', starters: 'starters', soup: 'seafood', dimsum: 'dimsum', pork: 'pork', chicken: 'chicken', beef: 'beef', seafood: 'seafood', szechuan: 'szechuan', tofu: 'tofu', veg: 'tofu', rice: 'rice', noodles: 'noodles', congee: 'dimsum', dessert: 'dessert', drinks: 'dessert' };
+  const asset = f => (typeof __A !== 'undefined' && __A[f]) || 'assets/' + f;
+  const tabs = document.getElementById('menuTabs'), grid = document.getElementById('menuGrid'), note = document.getElementById('menuNote'), sec = document.getElementById('menu');
   if (!tabs || !grid) return;
   const show = id => {
     const g = GROUPS.find(x => x.id === id) || GROUPS[0];
     tabs.querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.id === g.id)));
-    if (pics) pics.innerHTML = (PHOTOS[g.id] || []).map(([f, alt]) => `<img src="assets/${f}" alt="${e(alt)}" loading="lazy">`).join('');
+    if (sec) sec.style.setProperty('--menu-bg', `url("${asset((BG[g.id] || 'dimsum') + '.jpg')}")`);
     grid.innerHTML = g.cats.map(cat).join('');
     if (note) note.textContent = g.note || '';
   };

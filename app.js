@@ -140,4 +140,14 @@ if (!renderSlots()) {
   const t = iso(new Date(today.getTime() + 864e5));
   $('date').value = t; $('qDate').value = t; renderSlots();
 }
-summary(); renderEvSessions();
+renderEvSessions();
+if (CFG.demo) {
+  // Sample entries so the flow can be tried straight away. Pick the first free time and session.
+  const first = [...$('slots').querySelectorAll('button:not(:disabled)')][0]; if (first) first.click();
+  const firstEv = [...$('evSessions').querySelectorAll('button:not(:disabled)')][0]; if (firstEv) firstEv.click();
+  const v = (id, val) => { $(id).value = val; };
+  v('name', 'Maria Santos'); v('phone', '0917 555 0123'); v('email', 'maria@example.com'); v('occasion', 'Birthday'); v('notes', 'Window table if possible');
+  v('evName', 'Aileen Cruz'); v('evPhone', '0917 555 0199'); v('evEmail', 'aileen@example.com'); v('evType', 'Birthday'); v('evNotes', 'Karaoke set-up and a cake table');
+  const h = $('demoHint'); if (h) h.hidden = false;
+}
+summary();

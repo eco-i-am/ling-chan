@@ -7,33 +7,51 @@
   <p class="hint">Demo dashboard: data is stored in this browser only. Connect a real backend before going live (see README).</p>
   <div class="tools">
     <label>Branch <select id="fb"><option>Guerilla</option><option>Panorama</option></select></label>
-    <label>Date <input type="date" id="fd"></label>
+    <label class="datepick">Date
+      <span class="dayrow"><button type="button" class="step" id="prev" aria-label="Previous day">‹</button><input type="date" id="fd"><button type="button" class="step" id="next" aria-label="Next day">›</button></span>
+    </label>
   </div>
   <div class="stats" id="stats"></div>
   <h2>Event requests <small class="hint">(all dates, this branch)</small></h2>
-  <div class="tablewrap"><table><thead><tr><th>Date</th><th>Session</th><th>Event</th><th>Guests</th><th>Contact</th><th>Set-up / food</th><th>Code</th><th>Status</th><th></th></tr></thead><tbody id="evRows"></tbody></table></div>
+  <div class="tablewrap"><table class="stack"><thead><tr><th>Date</th><th>Session</th><th>Event</th><th>Guests</th><th>Contact</th><th>Set-up / food</th><th>Code</th><th>Status</th><th></th></tr></thead><tbody id="evRows"></tbody></table></div>
   <h2>Table reservations</h2>
-  <div class="tablewrap"><table><thead><tr><th>Time</th><th>Guest</th><th>Pax</th><th>Table</th><th>Contact</th><th>Notes</th><th>Code</th><th>Status</th><th></th></tr></thead><tbody id="rows"></tbody></table></div>
+  <div class="tablewrap"><table class="stack"><thead><tr><th>Time</th><th>Guest</th><th>Pax</th><th>Table</th><th>Contact</th><th>Notes</th><th>Code</th><th>Status</th><th></th></tr></thead><tbody id="rows"></tbody></table></div>
 </div>
 <script src="store.js"></script>
 <script>
 const $=id=>document.getElementById(id);
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const iso=d=>new Date(d-d.getTimezoneOffset()*6e4).toISOString().slice(0,10);
+const shift=n=>{const d=new Date($('fd').value+'T12:00:00');d.setDate(d.getDate()+n);$('fd').value=iso(d);draw();};
 $('fd').value=iso(new Date());
+// Each cell carries its column name so the table can turn into stacked cards on phones.
+const td=(label,html,cls='')=>`<td data-label="${label}"${cls?` class="${cls}"`:''}>${html}</td>`;
 function draw(){
   const list=Store.all().filter(r=>r.branch===$('fb').value&&r.date===$('fd').value).sort((a,b)=>a.time.localeCompare(b.time));
   const live=list.filter(r=>r.status!=='cancelled');
-  $('stats').innerHTML=`<div class="card"><b>${live.length}</b>bookings</div><div class="card"><b>${live.reduce((s,r)=>s+r.size,0)}</b>covers</div><div class="card"><b>${list.length-live.length}</b>cancelled</div>`;
-  $('rows').innerHTML=list.map(r=>`<tr><td>${Store.label(r.time)}</td><td>${esc(r.name)}${r.occasion?'<br><small>'+esc(r.occasion)+'</small>':''}</td><td>${r.size}</td><td>${esc(r.table)}</td>
-  <td>${esc(r.phone)}<br><small>${esc(r.email)}</small></td><td>${esc(r.notes)}</td><td>${esc(r.code)}</td><td><span class="status ${r.status}">${r.status}</span></td>
-  <td>${r.status==='confirmed'?`<button class="btn" data-id="${r.id}" data-s="seated">Seat</button><button class="btn ghost dark" data-id="${r.id}" data-s="cancelled">Cancel</button>`:''}</td></tr>`).join('')||'<tr><td colspan="9">No reservations.</td></tr>';
+  $('stats').innerHTML=`<div><b>${live.length}</b>bookings</div><div><b>${live.reduce((s,r)=>s+r.size,0)}</b>covers</div><div><b>${list.length-live.length}</b>cancelled</div>`;
+  $('rows').innerHTML=list.map(r=>`<tr>`+
+    td('Time',`<b>${Store.label(r.time)}</b>`,'main')+
+    td('Guest',`${esc(r.name)}${r.occasion?'<br><small>'+esc(r.occasion)+'</small>':''}`)+
+    td('Pax',r.size)+td('Table',esc(r.table))+
+    td('Contact',`${esc(r.phone)}${r.email?'<br><small>'+esc(r.email)+'</small>':''}`)+
+    td('Notes',esc(r.notes)||'—')+td('Code',esc(r.code))+
+    td('Status',`<span class="status ${r.status}">${r.status}</span>`)+
+    td('',r.status==='confirmed'?`<button class="btn" data-id="${r.id}" data-s="seated">Seat</button><button class="btn ghost" data-id="${r.id}" data-s="cancelled">Cancel</button>`:'','act')+`</tr>`).join('')||'<tr><td colspan="9" class="empty">No reservations for this day.</td></tr>';
   const evs=Store.events().filter(e=>e.branch===$('fb').value).sort((a,b)=>a.date.localeCompare(b.date));
-  $('evRows').innerHTML=evs.map(e=>`<tr><td>${esc(e.date)}</td><td>${esc(Store.sessionLabel(e.session).split(' · ')[0])}</td><td>${esc(e.type)}<br><small>${esc(e.notes)}</small></td><td>${e.guests}</td>
-  <td>${esc(e.name)}<br>${esc(e.phone)}<br><small>${esc(e.email)}</small></td><td>${esc(e.setup)}<br><small>${esc(e.food)}</small></td><td>${esc(e.code)}</td><td><span class="status ${e.status}">${e.status}</span></td>
-  <td>${e.status==='pending'?`<button class="btn" data-ev="${e.id}" data-s="confirmed">Confirm</button><button class="btn ghost dark" data-ev="${e.id}" data-s="declined">Decline</button>`:''}</td></tr>`).join('')||'<tr><td colspan="9">No event requests.</td></tr>';
+  $('evRows').innerHTML=evs.map(e=>`<tr>`+
+    td('Date',`<b>${esc(e.date)}</b>`,'main')+
+    td('Session',esc(Store.sessionLabel(e.session).split(' · ')[0]))+
+    td('Event',`${esc(e.type)}${e.notes?'<br><small>'+esc(e.notes)+'</small>':''}`)+
+    td('Guests',e.guests)+
+    td('Contact',`${esc(e.name)}<br>${esc(e.phone)}${e.email?'<br><small>'+esc(e.email)+'</small>':''}`)+
+    td('Set-up / food',`${esc(e.setup)}<br><small>${esc(e.food)}</small>`)+
+    td('Code',esc(e.code))+
+    td('Status',`<span class="status ${e.status}">${e.status}</span>`)+
+    td('',e.status==='pending'?`<button class="btn" data-ev="${e.id}" data-s="confirmed">Confirm</button><button class="btn ghost" data-ev="${e.id}" data-s="declined">Decline</button>`:'','act')+`</tr>`).join('')||'<tr><td colspan="9" class="empty">No event requests.</td></tr>';
 }
 $('evRows').onclick=e=>{const b=e.target.closest('button');if(b){Store.setEventStatus(b.dataset.ev,b.dataset.s);draw();}};
 $('rows').onclick=e=>{const b=e.target.closest('button');if(b){Store.setStatus(b.dataset.id,b.dataset.s);draw();}};
+$('prev').onclick=()=>shift(-1);$('next').onclick=()=>shift(1);
 $('fb').onchange=$('fd').onchange=draw;addEventListener('storage',draw);draw();
 </script></body></html>

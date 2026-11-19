@@ -92,9 +92,10 @@ legend{padding:0;font:600 .74rem/1.2 var(--body);letter-spacing:.1em;text-transf
 .menu-tabs button{flex:none;padding:8px 16px;border:1px solid var(--ink);background:transparent;color:var(--ink);border-radius:999px;font:500 .92rem var(--body);cursor:pointer}
 .menu-tabs button:hover{background:var(--paper)}
 .menu-tabs button[aria-pressed=true]{background:var(--ink);color:#fff}
-.menu-photos{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:12px;margin-bottom:36px}
-.menu-photos:empty{display:none}
-.menu-photos img{display:block;width:100%;height:clamp(200px,28vw,320px);object-fit:cover;border-radius:2px}
+/* faint food photo behind the menu; the text sits above it */
+.menu{position:relative;isolation:isolate;overflow:hidden}
+.menu::before{content:"";position:absolute;inset:0;z-index:-1;background:var(--menu-bg,none) center/cover no-repeat;opacity:.14;transition:opacity .3s}
+.menu::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,var(--white) 0%,rgba(255,255,255,0) 18%,rgba(255,255,255,0) 82%,var(--white) 100%)}
 .menu-note{margin:-8px 0 24px;color:var(--seal);font-weight:600}.menu-note:empty{display:none}
 .order small{color:var(--muted);font-weight:400}
 .order{margin:12px 0 0;padding-top:24px;border-top:1px solid var(--line);font-weight:500}
@@ -138,6 +139,29 @@ footer a{color:#a99d94}
 td .btn{padding:5px 12px;font-size:.8rem;margin:0 4px 4px 0}
 td .btn.ghost{background:transparent;border:1px solid var(--ink);color:var(--ink)!important}
 .tablewrap{overflow-x:auto}
+.dayrow{display:flex;align-items:stretch;margin-top:6px}.dayrow input{margin:0;border-radius:0}
+.step{width:44px;border:1px solid var(--ink);background:var(--white);color:var(--ink);font:600 1.3rem var(--body);cursor:pointer}
+.step:first-child{border-right:0}.step:last-child{border-left:0}
+.admin .empty{text-align:center;color:var(--muted);padding:24px}
+@media(max-width:760px){
+  .admin{padding-top:16px}
+  .tools{display:grid;grid-template-columns:1fr;gap:12px}.tools select,.tools input{width:100%;min-height:44px;font-size:1rem}
+  .dayrow input{flex:1;min-width:0}.step{width:52px}
+  .stats{width:100%}.stats>div{flex:1;padding:12px 10px;text-align:center}.stats b{font-size:1.8rem}
+  /* tables become stacked cards */
+  .admin table.stack,.admin table.stack tbody,.admin table.stack tr,.admin table.stack td{display:block;width:100%}
+  .admin table.stack thead{display:none}
+  .admin table.stack tr{background:var(--white);border:1px solid var(--line);border-left:4px solid var(--seal);margin:0 0 12px;padding:6px 14px 12px}
+  .admin table.stack td{display:flex;justify-content:space-between;gap:16px;border:0;border-bottom:1px solid var(--line);padding:8px 0;text-align:right}
+  .admin table.stack td::before{content:attr(data-label);flex:none;color:var(--muted);font:600 .72rem var(--body);letter-spacing:.08em;text-transform:uppercase;text-align:left;padding-top:2px}
+  .admin table.stack td.main{font-size:1.1rem;border-bottom:2px solid var(--ink)}
+  .admin table.stack td.act{border:0;padding-top:12px;gap:8px}.admin table.stack td.act::before{display:none}
+  .admin table.stack td.act:empty{display:none}
+  .admin table.stack td.act .btn{flex:1;margin:0;padding:12px 8px;font-size:.95rem}
+  .admin table.stack td.empty{display:block;text-align:center}.admin table.stack td.empty::before{display:none}
+  .admin table.stack tr:has(td.empty){border-left-color:var(--line)}
+  .admin-top{padding-block:12px}
+}
 
 @media(max-width:860px){
   .hero{display:block;min-height:0;background:var(--ink)}
