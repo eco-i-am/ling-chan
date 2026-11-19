@@ -9,8 +9,7 @@ const CFG = {
   maxPartyOnline: 12,
   // Tables per branch: capacity -> how many. TODO confirm real floor plan.
   tables: {
-    Guerilla: [{ seats: 2, n: 6 }, { seats: 4, n: 10 }, { seats: 6, n: 6 }, { seats: 10, n: 3 }, { seats: 12, n: 1 }],
-    Panorama: [{ seats: 2, n: 6 }, { seats: 4, n: 10 }, { seats: 6, n: 6 }, { seats: 10, n: 3 }]
+    Guerilla: [{ seats: 2, n: 6 }, { seats: 4, n: 10 }, { seats: 6, n: 6 }, { seats: 10, n: 3 }, { seats: 12, n: 1 }]
   }
 };
 CFG.eventSessions = [   // TODO confirm with the restaurant
@@ -90,19 +89,16 @@ Store.seedDemo = function () {
   add('Guerilla', iso(0), '12:30', 2, 'Maria Santos', '0918 555 0102', '', '');
   add('Guerilla', iso(0), '18:00', 4, 'J. Tan', '0920 555 0104', 'Anniversary', 'Quiet table');
   add('Guerilla', iso(0), '18:30', 10, 'Reyes Holiday Party', '0927 555 0103', 'Holiday party', 'Need 2 high chairs', 'seated');
-  add('Panorama', iso(0), '18:30', 4, 'Lim', '0915 555 0105', '', '');
   add('Guerilla', iso(1), '11:30', 3, 'Garcia', '0916 555 0106', '', '');
   add('Guerilla', iso(1), '12:00', 8, 'Bautista & friends', '0919 555 0107', 'Business', 'Invoice needed');
   // Tomorrow 7 PM: every table that seats 6 or more is taken, so larger parties see it greyed out
   [['Cruz', 6], ['Ocampo', 6], ['Mendoza', 6], ['Villanueva', 6], ['Pascual', 6], ['Aquino', 6], ['Tolentino', 10], ['Salazar', 10], ['Navarro', 10], ['Domingo', 12]]
     .forEach(([n, s], i) => add('Guerilla', iso(1), '19:00', s, n + ' family', '0917 555 02' + String(10 + i), '', ''));
   add('Guerilla', iso(2), '18:00', 5, 'Ramos', '0921 555 0108', 'Birthday', 'Cake arrives at 6');
-  add('Panorama', iso(2), '12:00', 12, 'Uy', '0922 555 0109', 'Family gathering', '');
   this.save(list);
   this.saveEvents([
     { id: 'evdemo0', code: 'EV-DEMO0', branch: 'Guerilla', type: 'Birthday', date: iso(10), session: 'dinner', guests: 45, setup: 'Function area (private)', food: 'Set menu per head', name: 'Aileen Cruz', phone: '0917 555 0199', email: 'aileen@example.com', notes: '60th birthday, needs karaoke', status: 'pending', createdAt: Date.now() },
-    { id: 'evdemo1', code: 'EV-DEMO1', branch: 'Guerilla', type: 'Company event', date: iso(21), session: 'lunch', guests: 80, setup: 'Whole restaurant buy-out', food: 'Party trays', name: 'R. Mendoza', phone: '0928 555 0188', email: '', notes: 'Year-end lunch', status: 'confirmed', createdAt: Date.now() },
-    { id: 'evdemo2', code: 'EV-DEMO2', branch: 'Panorama', type: 'Wedding / Reception', date: iso(35), session: 'dinner', guests: 120, setup: 'Whole restaurant buy-out', food: 'Set menu per head', name: 'Santos-Lee', phone: '0917 555 0177', email: '', notes: 'Reception for 120, stage and sound system', status: 'pending', createdAt: Date.now() }
+    { id: 'evdemo1', code: 'EV-DEMO1', branch: 'Guerilla', type: 'Company event', date: iso(21), session: 'lunch', guests: 80, setup: 'Whole restaurant buy-out', food: 'Party trays', name: 'R. Mendoza', phone: '0928 555 0188', email: '', notes: 'Year-end lunch', status: 'confirmed', createdAt: Date.now() }
   ]);
 };
 if (CFG.demo) Store.seedDemo();

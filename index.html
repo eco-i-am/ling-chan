@@ -29,7 +29,7 @@
       <h1>Serving<br>Authentic<br>Happiness</h1>
       <p class="lead">Big round tables, shared plates and the dishes you grew up passing around. Book a table in a minute.</p>
       <form id="quick" class="quick" aria-label="Find a table">
-        <label>Branch<select id="qBranch"><option value="Guerilla">Guerilla St.</option><option value="Panorama">Panorama</option></select></label>
+        <input type="hidden" id="qBranch" value="Guerilla">
         <label>Date<input type="date" id="qDate"></label>
         <label>Guests<select id="qSize"></select></label>
         <button class="btn" type="submit">Find a table</button>
@@ -50,12 +50,7 @@
           <form id="resForm" class="panel" role="tabpanel" aria-labelledby="tabTable" novalidate>
             <h2>Reserve a table</h2>
             <div class="row">
-              <label>Branch
-                <select id="branch" required>
-                  <option value="Guerilla">Guerilla St., Sto. Niño</option>
-                  <option value="Panorama">Panorama</option>
-                </select>
-              </label>
+              <input type="hidden" id="branch" value="Guerilla">
               <label>Guests<select id="size" required></select></label>
               <label>Date<input type="date" id="date" required></label>
             </div>
@@ -83,9 +78,7 @@
             <h2>Book an event</h2>
             <p class="sub">We hold your date right away and our events team calls to confirm the details.</p>
             <div class="row">
-              <label>Venue
-                <select id="evBranch"><option value="Guerilla">Guerilla St., Sto. Niño</option><option value="Panorama">Panorama</option></select>
-              </label>
+              <input type="hidden" id="evBranch" value="Guerilla">
               <label>Event type
                 <select id="evType"><option>Birthday</option><option>Wedding / Reception</option><option>Christening</option><option>Family reunion</option><option>Company event</option><option>Graduation</option><option>Other</option></select>
               </label>
@@ -141,7 +134,7 @@
       </header>
       <div id="menuTabs" class="menu-tabs" role="group" aria-label="Menu categories"></div>
       <p id="menuNote" class="menu-note"></p>      <div id="menuGrid" class="menu-cols"></div>
-      <p class="order">Party trays and take-out: Guerilla <a href="tel:+639270124004">0927 012 4004</a> · Panorama <a href="tel:+639285245346">0928 524 5346</a><br><small>Prices include 12% VAT and are subject to 7% service charge. Panorama prices may differ.</small></p>
+      <p class="order">Party trays and take-out: <a href="tel:+639270124004">0927 012 4004</a><br><small>Prices include 12% VAT and are subject to 7% service charge.</small></p>
     </div>
   </section>
 
@@ -162,7 +155,7 @@
         <address>
           <b>Guerilla</b><br>2 Guerilla Street, Barangay Sto. Niño<br>Marikina City 1800
         </address>
-        <p><b>Reservations &amp; orders</b><br>Guerilla <a href="tel:+639270124004">0927 012 4004</a><br>Panorama <a href="tel:+639285245346">0928 524 5346</a></p>
+        <p><b>Reservations &amp; orders</b><br><a href="tel:+639270124004">0927 012 4004</a></p>
         <p><b>Email</b><br><a href="mailto:lingchanguerilla@gmail.com">lingchanguerilla@gmail.com</a></p>
         <p class="links"><a href="https://www.google.com/maps/search/?api=1&query=2+Guerilla+Street+Sto.+Nino+Marikina+City" target="_blank" rel="noopener">Directions</a> · <a href="https://www.facebook.com/p/Ling-Chan-61566582730433/" target="_blank" rel="noopener">Facebook</a></p>
       </div>

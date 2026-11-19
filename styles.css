@@ -30,7 +30,7 @@ h3{font-size:1.4rem}
 .hero-copy{width:100%;max-width:640px;padding:150px max(24px,4vw) 56px max(24px,calc((100vw - 1120px)/2))}
 .hero h1{font-size:clamp(3rem,7vw,5.8rem);letter-spacing:-.02em;margin-bottom:26px}
 .lead{max-width:34ch;font-size:1.12rem;color:#d8cfc6;margin:0 0 36px}
-.quick{display:grid;grid-template-columns:1.1fr 1.1fr .8fr auto;gap:0;background:var(--white);color:var(--ink);align-items:end;max-width:640px}
+.quick{display:grid;grid-template-columns:1.3fr 1fr auto;gap:0;background:var(--white);color:var(--ink);align-items:end;max-width:640px}
 .quick label{display:block;padding:10px 14px 8px;font:600 .68rem/1 var(--body);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);border-right:1px solid var(--line)}
 .quick select,.quick input{display:block;width:100%;margin-top:6px;border:0;background:transparent;font:500 1rem var(--body);color:var(--ink);padding:2px 0;border-radius:0}
 .quick .btn{align-self:stretch;border-radius:0;padding:0 26px}
@@ -171,11 +171,11 @@ td .btn.ghost{background:transparent;border:1px solid var(--ink);color:var(--ink
   .hero{display:block;min-height:0;background:var(--ink)}
   .hero::before{content:"";display:block;height:62vw;min-height:230px;max-height:420px;background:url(assets/front.jpg) center 30%/cover no-repeat}
   .hero-copy{max-width:none;padding:32px max(20px,env(safe-area-inset-left,0px)) 40px}.seal{display:none}
-  .quick{max-width:none}.quick label:nth-child(3){grid-column:1/-1;border-right:0}
+  .quick{max-width:none}
   .top{position:sticky;top:env(safe-area-inset-top,0px);background:var(--ink);padding:10px max(16px,env(safe-area-inset-left,0px))}.top nav{gap:16px}.top nav a:nth-child(2),.top nav a:nth-child(3){display:none}
   .brand img{width:48px;height:48px}
   .menu-photos{grid-auto-flow:row}
-  .quick{grid-template-columns:1fr 1fr}.quick label{border-bottom:1px solid var(--line)}.quick .btn{grid-column:1/-1;padding:16px}
+  .quick{grid-template-columns:1fr 1fr}.quick label{border-bottom:1px solid var(--line)}.quick label:nth-of-type(2){border-right:0}.quick .btn{grid-column:1/-1;padding:16px}
   .book-grid{grid-template-columns:1fr;gap:40px}.side{border-left:0;border-top:1px solid var(--line);padding:32px 0 0}
   .row,.row.two{grid-template-columns:1fr}
   .menu-cols{columns:1}.celebrate{grid-template-columns:1fr}.celebrate img{min-height:280px}
