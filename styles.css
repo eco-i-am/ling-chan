@@ -85,9 +85,13 @@ legend{padding:0;font:600 .74rem/1.2 var(--body);letter-spacing:.1em;text-transf
 .cat .dots{flex:1;border-bottom:1px dotted var(--muted);transform:translateY(-4px);min-width:16px}
 .price{font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap}
 .cat small{display:block;color:var(--muted);font-size:.82rem}
-.cat li em{font:600 .95rem var(--zh);font-style:normal;color:var(--seal);margin-left:6px;white-space:nowrap}
-.cat .tag{margin-left:auto;font:600 .68rem var(--body);letter-spacing:.12em;text-transform:uppercase;background:var(--ink);color:#fff;padding:3px 8px;border-radius:2px}
-.menu-head.second{margin-top:72px}
+.cat li em{font:600 .95rem var(--zh);font-style:normal;color:var(--seal);margin-left:6px}
+.menu-tabs{display:flex;gap:8px;overflow-x:auto;padding-bottom:10px;margin-bottom:28px;scrollbar-width:thin}
+.menu-tabs button{flex:none;padding:8px 16px;border:1px solid var(--ink);background:transparent;color:var(--ink);border-radius:999px;font:500 .92rem var(--body);cursor:pointer}
+.menu-tabs button:hover{background:var(--paper)}
+.menu-tabs button[aria-pressed=true]{background:var(--ink);color:#fff}
+.menu-note{margin:-8px 0 24px;color:var(--seal);font-weight:600}.menu-note:empty{display:none}
+.order small{color:var(--muted);font-weight:400}
 .order{margin:12px 0 0;padding-top:24px;border-top:1px solid var(--line);font-weight:500}
 
 /* events band */
