@@ -1,26 +1,17 @@
-const MENU = [
-  ['Pork', [['Lumpiang Shanghai (48pcs)', 1250], ['Sweet & Sour Pork', 1699]]],
-  ['Shrimp', [['Buttered Garlic Shrimp', 1899], ['Salt and Pepper Shrimp', 1899], ['Sweet Chili Shrimp', 1999], ['Salted Egg Shrimp', 2099]]],
-  ['Beef', [['Beef Broccoli', 1899], ['Beef with Bokchoy', 1899]]],
-  ['Rice', [['Egg Fried Rice', 1499], ['Yang Chow Fried Rice', 1799], ["Ling Chan's Fried Rice", 1899]]],
-  ['Chicken', [['Sweet & Sour Chicken', 1599]]],
-  ['Noodles', [['Chow Mien', 1499], ['Birthday Noodles', 1799]]],
-  ['Dimsum', [['Pork & Shrimp Siomai (20pcs)', 1100], ['Siopao (3pcs each: Asado, Choco, Taro, Egg Yolk)', 750]]],
-  ['Dessert', [['Buchi (20pcs: x12 Custard, x4 Taro, x4 Black Sesame)', 1000]]]
-];
 const $ = id => document.getElementById(id);
 const peso = n => '₱' + n.toLocaleString('en-PH');
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
-$('menuGrid').innerHTML = MENU.map(([cat, items]) =>
-  `<div class="card"><h3>${cat}</h3><ul>${items.map(([n, p]) => `<li><span>${esc(n)}</span><span class="price">${peso(p)}</span></li>`).join('')}</ul></div>`).join('');
 $('yr').textContent = new Date().getFullYear();
-$('hoursText').textContent = Store.label(Store.hhmm(CFG.hours.open * 60)) + ' – ' + Store.label(Store.hhmm(CFG.hours.close * 60));
 
-for (let i = 1; i <= CFG.maxPartyOnline; i++) $('size').add(new Option(i + (i === 1 ? ' guest' : ' guests'), i, i === 2, i === 2));
+for (let i = 1; i <= CFG.maxPartyOnline; i++) {
+  const t = i + (i === 1 ? ' guest' : ' guests');
+  $('size').add(new Option(t, i, i === 2, i === 2)); $('qSize').add(new Option(t, i, i === 2, i === 2));
+}
 const today = new Date(); const iso = d => new Date(d - d.getTimezoneOffset() * 6e4).toISOString().slice(0, 10);
 $('date').min = iso(today); $('date').value = iso(today);
 $('date').max = iso(new Date(today.getTime() + 60 * 864e5));
+$('qDate').min = $('date').min; $('qDate').max = $('date').max; $('qDate').value = $('date').value;
 
 let chosen = '';
 function renderSlots() {
@@ -112,19 +103,35 @@ $('evForm').addEventListener('submit', e => {
   const r = Store.createEvent({ branch: $('evBranch').value, type: $('evType').value, date: $('evDate').value, session: evSession, guests: g,
     setup: $('evSetup').value, food: $('evFood').value, name, phone, email: $('evEmail').value.trim(), notes: $('evNotes').value.trim() });
   if (!r) { renderEvSessions(); return $('evErr').textContent = 'Sorry, that session was just taken. Please pick another.'; }
-  $('mTitle').textContent = 'Event request received 🎊';
+  $('mTitle').textContent = 'Event request received';
   $('mBody').innerHTML = `<p>Thanks, ${esc(r.name)}! We're holding your date. Our events team will contact you to confirm.</p><div class="code">${r.code}</div>
     <p class="center">${esc(r.type)} · ${esc(r.branch)}<br>${esc(r.date)} · ${esc(Store.sessionLabel(r.session))} · ${r.guests} guests</p>`;
   $('modal').hidden = false; $('evForm').reset(); $('evDate').value = r.date; $('evGuests').value = 30; evSession = ''; renderEvSessions();
 });
-$('mClose').onclick = () => { $('modal').hidden = true; $('mTitle').textContent = 'Reservation confirmed 🎉'; };
+$('mClose').onclick = () => { $('modal').hidden = true; $('mTitle').textContent = 'Reservation confirmed'; };
 
 /* ---------- In-page navigation: every #anchor button scrolls ---------- */
+function showTab(which) {
+  const ev = which === 'event';
+  $('resForm').hidden = ev; $('evForm').hidden = !ev;
+  $('tabTable').setAttribute('aria-selected', String(!ev)); $('tabEvent').setAttribute('aria-selected', String(ev));
+  $('summary').hidden = ev;
+}
+$('tabTable').onclick = () => showTab('table');
+$('tabEvent').onclick = () => showTab('event');
 document.addEventListener('click', e => {
   const a = e.target.closest('a[href^="#"]'); if (!a) return;
   const h = a.getAttribute('href');
   if (h === '#staff' || h === '#') return;
+  if (a.dataset.tab) showTab(a.dataset.tab);
   const t = document.getElementById(h.slice(1)); if (!t) return;
   e.preventDefault(); t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+});
+/* Hero search bar: copy into the full form and jump to the times */
+$('quick').addEventListener('submit', e => {
+  e.preventDefault();
+  $('branch').value = $('qBranch').value; $('size').value = $('qSize').value; $('date').value = $('qDate').value || $('date').value;
+  showTab('table'); renderSlots(); summary();
+  $('book').scrollIntoView({ behavior: 'smooth', block: 'start' });
 });
 renderSlots(); summary(); renderEvSessions();

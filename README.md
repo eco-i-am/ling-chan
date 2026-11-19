@@ -4,6 +4,7 @@ Static site (no build). Open `index.html`, or run `npx serve .`.
 
 - `index.html` — public site + reservation flow (branch, date, party size, live availability, confirmation code, look up / cancel)
 - `admin.html` — staff dashboard (per branch/day, seat/cancel)
+- `menu.js` — menu data (EN + Chinese names, prices)
 - `store.js` — availability engine + storage. **Demo storage is localStorage** (per browser) — replace `all/save/create/setStatus` with API calls to a real backend (or the POS vendor's booking API) before launch.
 
 ## Sourced from Facebook (Ling Chan page)
