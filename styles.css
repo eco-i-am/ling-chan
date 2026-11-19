@@ -182,3 +182,4 @@ td .btn.ghost{background:transparent;border:1px solid var(--ink);color:var(--ink
   .visit-grid{grid-template-columns:1fr;gap:32px}.map img{height:300px}
 }
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+input[type=hidden]{display:none!important}
